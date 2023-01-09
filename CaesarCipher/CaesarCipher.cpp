@@ -33,21 +33,19 @@ int main() {
 		}
 
 		int letterAcode = 97;
-		int offset2 = 19;
-
+		
 		for (int i = 0; i < strlen; i++) {
-			char a = str[i];
-			if (str[i] >= 65 && str[i] <= 90) { letterAcode = 65; offset2 = 13; }
-			if (str[i] >= 97 && str[i] <= 122) { letterAcode = 97; offset2 = 19; }
+			if (str[i] >= 65 && str[i] <= 90) { letterAcode = 65;  }
+			if (str[i] >= 97 && str[i] <= 122) { letterAcode = 97;  }
 
 			/*
 			* Перебирает прописные и строчные буквы по принципу: после Z идет A
 			* offset - число сдвига
 			* Сдвиг работает в обе стороны: +offset => XYZABC... || -offset => CBAZYX...
-			* Для строчных букв offset2 = 19 & letterAcode = 97
-			* Для ПРОПИСНЫХ букв offset2 = 13 & letterAcode = 65
+			* Для строчных букв letterAcode = 97
+			* Для ПРОПИСНЫХ букв letterAcode = 65
 			*/
-			str[i] = ((a - offset2 + (offset % 26)) % 26) + letterAcode;
+			str[i] = ((str[i] - letterAcode % 26 + (offset % 26)) % 26) + letterAcode;
 		}
 		cout << str << endl << endl;
 		delete[] str;
