@@ -42,13 +42,12 @@ int main() {
 
 			/*
 			* Перебирает прописные и строчные буквы по принципу: после Z идет A
-			* Сдвиг работает в обе стороны:
-			* +offset => XYZABC... || -offset => CBAZYX...
-			* Для строчных букв offset2 = 19 & letterAcode = 65
-			* Для ПРОПИСНЫХ букв offset2 = 13 & letterAcode = 97
+			* offset - число сдвига
+			* Сдвиг работает в обе стороны: +offset => XYZABC... || -offset => CBAZYX...
+			* Для строчных букв offset2 = 19 & letterAcode = 97
+			* Для ПРОПИСНЫХ букв offset2 = 13 & letterAcode = 65
 			*/
 			str[i] = ((a - offset2 + (offset % 26)) % 26) + letterAcode;
-			//cout << str[i];
 		}
 		cout << str << endl << endl;
 		delete[] str;
