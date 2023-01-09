@@ -3,60 +3,55 @@ using namespace std;
 
 int main() {
 	setlocale(LC_ALL, "");
+	do {
+		char cipherOperation;
+		cout << "Выберите операцию (e - шифрование, d - дешифрование, q - выход): ";
+		cin >> cipherOperation;
+		if ((cipherOperation != 'e') && (cipherOperation != 'd') && (cipherOperation != 'q')) { cout << "Неверный ввод!\n"; continue; }
+		if (cipherOperation == 'q') { cout << "Goodbye"; return 0; }
 
+		int strlen;
+		cout << "Введите длину строки: ";
+		cin >> strlen;
 
-	// Данный алгоритм позволяет при любом сдвиге не выходить за пределы алфавита.
-	// Если a == 97
-	// 97 + 26 + 26 ... + 26 всегда будут выдавать a
+		char* str = new char[strlen + 1];
+		cout << "Введите строку: ";
+		cin >> str;
 
-	// Входные данные: 
-	// символ выбора операции (шифрование или дешифрование) 
-	// длина строки
-	// массив символов char arr[]
-	// целое число  — сдвиг шифра
-	// Вводится строка без каких-либо неалфавитных символов.
-	// Символы в строке:  (строчные и заглавные).
-	// Неалфавитные символы: знаки препинания, пробелы, цифры, — не вводятся и, соответственно, не меняются.
-	// Выходные данные: преобразованная согласно шифру строка.
+		int offset;
+		cout << "Введите число - сдвиг шифра: ";
+		cin >> offset;
 
+		switch (cipherOperation)
+		{
+		case 'e':
+			cout << "Зашифрованная строка: ";
+			break;
+		case 'd':
+			cout << "Дешифрованная строка: ";
+			offset = ~offset++;
+		}
 
-	char cipherOperation;
-	cout << "Выберите операцию (e - шифрование, d - дешифрование): ";
-	cin >> cipherOperation;
+		int letterAcode = 97;
+		int offset2 = 19;
 
-	int strlen;
-	cout << "Введите длину строки: ";
-	cin >> strlen;
+		for (int i = 0; i < strlen; i++) {
+			char a = str[i];
+			if (str[i] >= 65 && str[i] <= 90) { letterAcode = 65; offset2 = 13; }
+			if (str[i] >= 97 && str[i] <= 122) { letterAcode = 97; offset2 = 19; }
 
-	char* str = new char[strlen];
-	cout << "Введите строку: ";
-	cin >> str;
-
-	int offset;
-	cout << "Введите число - сдвиг шифра: ";
-	cin >> offset;
-
-	switch (cipherOperation)
-	{
-	case 'e':
-		cout << "Зашифрованная строка: ";
-		break;
-	case 'd':
-		cout << "Дешифрованная строка: ";
-		offset = ~offset;
-	default:
-		break;
-	}
-
-	int range = 1;
-	for (int i = 0; i < strlen; ++i) {
-		char a = str[i];
-		if (str[i] >= 97 && str[i] <= 122) { range = 123 - a; }
-		if (str[i] >= 65 && str[i] <= 90) { range = 91 - a; }
-		str[i] = a + offset + (256 - (range * (offset / range)));
-	}
-
-	cout << str;
+			/*
+			* Перебирает прописные и строчные буквы по принципу: после Z идет A
+			* Сдвиг работает в обе стороны:
+			* +offset => XYZABC... || -offset => CBAZYX...
+			* Для строчных букв offset2 = 19 & letterAcode = 65
+			* Для ПРОПИСНЫХ букв offset2 = 13 & letterAcode = 97
+			*/
+			str[i] = ((a - offset2 + (offset % 26)) % 26) + letterAcode;
+			//cout << str[i];
+		}
+		cout << str << endl << endl;
+		delete[] str;
+	} while (1);
 	return 0;
-
 }
