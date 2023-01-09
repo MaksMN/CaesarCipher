@@ -11,16 +11,12 @@ int main() {
 		if (cipherOperation == 'q') { cout << "Goodbye"; return 0; }
 
 		int strlen;
-		cout << "Введите длину строки: ";
-		cin >> strlen;
-
+		cout << "Введите длину строки: "; cin >> strlen;
 		char* str = new char[strlen + 1];
-		cout << "Введите строку: ";
-		cin >> str;
-
+		cout << "Введите строку: ";	cin >> str;
 		int offset;
-		cout << "Введите число - сдвиг шифра: ";
-		cin >> offset;
+		cout << "Введите число - сдвиг шифра: "; cin >> offset;
+		cin.clear(); while (cin.get() != '\n');
 
 		switch (cipherOperation)
 		{
@@ -32,20 +28,14 @@ int main() {
 			offset = ~offset++;
 		}
 
-		int letterAcode = 97;
-		
+		int letterAcode = 0;
+		bool makeOffset = false;
 		for (int i = 0; i < strlen; i++) {
-			if (str[i] >= 65 && str[i] <= 90) { letterAcode = 65;  }
-			if (str[i] >= 97 && str[i] <= 122) { letterAcode = 97;  }
-
-			/*
-			* Сдвигает прописные и строчные буквы по принципу: после Zz идет Aa
-			* offset - число сдвига
-			* Сдвиг работает в обе стороны: +offset => XYZABC... || -offset => CBAZYX...
-			* Для строчных букв letterAcode = 97
-			* Для ПРОПИСНЫХ букв letterAcode = 65
-			*/
+			if (str[i] >= 65 && str[i] <= 90) { letterAcode = 65; }
+			if (str[i] >= 97 && str[i] <= 122) { letterAcode = 97; }
+			if (!((letterAcode & 65) | (letterAcode & 97))) continue;
 			str[i] = ((str[i] - letterAcode % 26 + (offset % 26)) % 26) + letterAcode;
+			letterAcode = 0;
 		}
 		cout << str << endl << endl;
 		delete[] str;
