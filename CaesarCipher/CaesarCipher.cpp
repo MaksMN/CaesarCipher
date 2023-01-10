@@ -3,16 +3,17 @@ using namespace std;
 
 int main() {
 	setlocale(LC_ALL, "");
+	char operation;
+	int strlen, offset;
+	char* str;
 	do {
-		char operation;
 		cout << "Выберите операцию (e - шифрование, d - дешифрование, q - выход): ";
 		cin >> operation;
 		if ((operation != 'e') && (operation != 'd') && (operation != 'q')) { cout << "Неверный ввод!\n"; continue; }
 		if (operation == 'q') { cout << "Goodbye"; return 0; }
-		
-		int strlen , offset;
+
 		cout << "Введите длину строки: "; cin >> strlen;
-		char* str = new char[strlen + 1];
+		str = new char[strlen + 1];
 		cout << "Введите строку: ";	cin >> str;
 		cout << "Введите число - сдвиг шифра: "; cin >> offset;
 		cin.clear(); while (cin.get() != '\n');
